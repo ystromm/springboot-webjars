@@ -39,17 +39,25 @@ public class WebjarVersionFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
             ServletException {
         final String requestURI = ((HttpServletRequest) request).getRequestURI();
+        final Optional<String> requestURIWithVersion = requestURIWithVersion(requestURI);
+        if (requestURIWithVersion.isPresent()) {
+            request.getRequestDispatcher(requestURIWithVersion.get()).forward(request, response);
+        } else {
+            chain.doFilter(request, response);
+        }
+    }
+
+    private Optional<String> requestURIWithVersion(CharSequence requestURI) {
         final Matcher matcher = requestUriPattern.matcher(requestURI);
         if (matcher.find()) {
             final String library = matcher.group(2);
             final Optional<String> version = webjarVersion(WebjarVersion.DEFAULT_MAVEN_GROUPS[0], library);
             if (version.isPresent()) {
-                final String requestURIWithVersion = matcher.group(1) + library + "/" + version.get()
-                        + matcher.group(3);
-                request.getRequestDispatcher(requestURIWithVersion).forward(request, response);
+                return Optional.of(matcher.group(1) + library + "/" + version.get()
+                        + matcher.group(3));
             }
         }
-        chain.doFilter(request, response);
+        return Optional.absent();
     }
 
     @Override

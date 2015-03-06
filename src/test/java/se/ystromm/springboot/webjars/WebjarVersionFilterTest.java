@@ -51,7 +51,7 @@ public class WebjarVersionFilterTest {
         when(request.getRequestDispatcher(Mockito.anyString())).thenReturn(requestDispatcher);
         new WebjarVersionFilter().doFilter(request, response, chain);
         verify(requestDispatcher).forward(request, response);
-        verify(request).getRequestDispatcher("webjars/d3js/3.5.3/d3.min.js");
+        verify(request).getRequestDispatcher("/webjars/d3js/3.5.3/d3.min.js");
         verifyNoMoreInteractions();
     }
 
