@@ -3,7 +3,6 @@ package se.ystromm.springboot.webjars;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import com.google.common.base.Optional;
