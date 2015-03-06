@@ -1,13 +1,19 @@
 apply plugin: 'java'
 
+// spring-boot
+// classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE'
+
 repositories {
     jcenter()
 }
 
 dependencies {
+    // TODO figure out a simpler dependency 
+    compile "org.springframework.boot:spring-boot-starter-web:1.2.1.RELEASE"
     compile 'com.google.guava:guava:18.0'
     testCompile 'junit:junit:4.11'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
+    testCompile 'org.mockito:mockito-core:1.+'
     testRuntime 'org.webjars:d3js:3.5.3'
 }
 
