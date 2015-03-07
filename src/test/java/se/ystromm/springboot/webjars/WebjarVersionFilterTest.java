@@ -5,10 +5,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
-import javax.servlet.FilterChain;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Test;
@@ -28,6 +25,19 @@ public class WebjarVersionFilterTest {
     private ServletResponse response;
     @Mock
     private RequestDispatcher requestDispatcher;
+    @Mock
+    private FilterConfig filterConfig;
+
+    @Test
+    public void init_should_do_nothing() throws ServletException {
+        new WebjarVersionFilter().init(filterConfig);
+        Mockito.verifyNoMoreInteractions(filterConfig);
+    }
+
+    @Test
+    public void destroy_should_do_nothing() throws ServletException {
+        new WebjarVersionFilter().destroy();
+    }
 
     @Test
     public void doFilter_should_chain_doFilter() throws IOException, ServletException {
