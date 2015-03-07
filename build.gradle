@@ -1,14 +1,24 @@
 apply plugin: 'java'
 
-// spring-boot
-// classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'net.saliman:gradle-cobertura-plugin:2.0.0'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0'
+    }
+}
+
+apply plugin: 'cobertura'
+apply plugin: 'com.github.kt3k.coveralls'
 
 repositories {
     jcenter()
 }
 
 dependencies {
-    // TODO figure out a simpler dependency 
+    // TODO figure out a simpler dependency
     compile "org.springframework.boot:spring-boot-starter-web:1.2.1.RELEASE"
     compile 'com.google.guava:guava:18.0'
     testCompile 'junit:junit:4.11'
@@ -16,6 +26,8 @@ dependencies {
     testCompile 'org.mockito:mockito-core:1.+'
     testRuntime 'org.webjars:d3js:3.5.3'
 }
+
+cobertura.coverageFormats = ['html', 'xml']
 
 task wrapper(type: Wrapper) {
     description 'Generate gradle wrapper'
