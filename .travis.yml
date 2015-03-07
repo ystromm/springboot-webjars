@@ -4,5 +4,4 @@ jdk:
   - openjdk7
 
 after_success:
-  - cobertura
-  - coveralls
+  - ./gradlew cobertura coveralls
