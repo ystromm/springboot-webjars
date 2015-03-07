@@ -1,16 +1,10 @@
-apply plugin: 'java'
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'net.saliman:gradle-cobertura-plugin:2.0.0'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0'
-    }
+plugins {
+    id 'net.saliman.cobertura' version '2.2.7'
+    id 'com.github.kt3k.coveralls' version '2.3.1'
 }
 
-apply plugin: 'cobertura'
+apply plugin: 'java'
+apply plugin: 'net.saliman.cobertura'
 apply plugin: 'com.github.kt3k.coveralls'
 
 repositories {
