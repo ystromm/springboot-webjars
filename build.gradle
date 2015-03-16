@@ -1,15 +1,20 @@
 plugins {
     id 'net.saliman.cobertura' version '2.2.7'
     id 'com.github.kt3k.coveralls' version '2.3.1'
+    id "com.jfrog.bintray" version "1.0"
 }
 
 apply plugin: 'java'
 apply plugin: 'net.saliman.cobertura'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'maven'
 
 repositories {
     jcenter()
 }
+
+group = "com.github.ystromm"
+version = "0.0.1"
 
 dependencies {
     // TODO figure out a simpler dependency
@@ -23,9 +28,101 @@ dependencies {
 
 cobertura.coverageFormats = ['html', 'xml']
 
+jar {
+    manifest {
+        attributes(
+                "Application-Name": project.name,
+                "Implementation-Version": project.version
+        )
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+javadoc {
+    failOnError = false
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+    archives javadocJar
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            // TODO snapshots go here:
+            // <id>oss-jfrog-artifactory</id>
+            // <name>oss-jfrog-artifactory-snapshots</name>
+            // <url>http://oss.jfrog.org/artifactory/oss-snapshot-local</url>
+      
+            name = 'maven'
+            repository(id: 'bintray-ystromm-maven', 
+                url: 'https://api.bintray.com/content/ystromm/maven/springboot-webjars/0.0.1') {
+            }
+        }
+    }
+}
+
 task wrapper(type: Wrapper) {
     description 'Generate gradle wrapper'
     group 'Gradle'
 
     gradleVersion = '2.2'
 }
+
+
+
+//bintray {
+//    user = 'ystromm'
+//    key = 'fc2550a923f49e8ed51c36bc9e072a9573db31df'
+//
+//    publications = ['mavenStuff'] //When uploading Maven-based publication files
+////    filesSpec { //When uploading any arbitrary files ('filesSpec' is a standard Gradle CopySpec)
+////        from 'arbitrary-files'
+////        into 'standalone_files/level1'
+////        rename '(.+)\\.(.+)', '$1-suffix.$2'
+////    }
+//    dryRun = false //Whether to run this as dry-run, without deploying
+//    publish = true //If version should be auto published after an upload
+//    pkg {
+//        repo = 'springboot-webjars'
+//        userOrg = 'se.ystromm' //An optional organization name when the repo belongs to one of the user's orgs
+//        name = 'springboot-webjars'
+//        desc = 'Springboot Webjars version filter'
+//        websiteUrl = 'https://github.com/ystromm/springboot-webjars'
+//        issueTrackerUrl = 'https://github.com/ystromm/springboot-webjars'
+//        vcsUrl = 'https://github.com/ystromm/springboot-webjars.git'
+//        licenses = ['Apache-2.0']
+//        // labels = ['gear', 'gore', 'gorilla']
+//        publicDownloadNumbers = true
+//        // attributes= ['a': ['ay1', 'ay2'], 'b': ['bee'], c: 'cee'] //Optional package-level attributes
+//        //Optional version descriptor
+//        version {
+//            name = '1.3-Final' //Bintray logical version name
+//            // desc = 'optional, version-specific description'
+//            released  = 'optional, date of the version release' //2 possible values: date in the format of 'yyyy-MM-dd'T'HH:mm:ss.SSSZZ' OR a java.util.Date instance
+//            vcsTag = '1.0.0'
+//            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin'] //Optional version-level attributes
+//            gpg {
+//                sign = true //Determines whether to GPG sign the files. The default is false
+//                passphrase = 'passphrase' //Optional. The passphrase for GPG signing'
+//            }
+//            mavenCentralSync {
+//                sync = false //Optional (true by default). Determines whether to sync the version to Maven Central.
+//                user = 'userToken' //OSS user token
+//                password = 'paasword' //OSS user password
+//                close = '1' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
+//            }
+//        }
+//    }
+//}
