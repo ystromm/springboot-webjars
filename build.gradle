@@ -13,7 +13,7 @@ apply plugin: 'maven'
 repositories { jcenter() }
 
 group = "com.github.ystromm"
-version = "0.0.1"
+version = "0.0.2"
 ext.artifactory_user="ystromm"
 ext.artifactory_password=""
 
@@ -66,7 +66,7 @@ uploadArchives {
             repository(
                     id: 'bintray-ystromm-maven',
                     // ojo: id: 'oss-jfrog-artifactory',
-                    url: 'https://api.bintray.com/content/ystromm/maven/springboot-webjars/0.0.1') {
+                    url: "https://api.bintray.com/content/ystromm/maven/springboot-webjars/${version}") {
                         // ojo: url: 'http://oss.jfrog.org/artifactory/oss-snapshot-local') {
                         authentication(userName: "${artifactory_user}",
                         password: "${artifactory_password}")
