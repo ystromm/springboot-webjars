@@ -15,6 +15,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Optional;
@@ -29,6 +31,7 @@ import com.google.common.base.Optional;
 @Component
 public class WebjarVersionFilter implements Filter {
     final Pattern requestUriPattern = Pattern.compile("^(/webjars/)([\\w-]+)(/\\D.*)$");
+    private final static Logger log = LoggerFactory.getLogger(WebjarVersionFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -41,8 +44,10 @@ public class WebjarVersionFilter implements Filter {
         final String requestURI = ((HttpServletRequest) request).getRequestURI();
         final Optional<String> requestURIWithVersion = requestURIWithVersion(requestURI);
         if (requestURIWithVersion.isPresent()) {
+            log.debug("Forwarding to requestURI={} to requestURIWithVersion={}", requestURI, requestURIWithVersion);
             request.getRequestDispatcher(requestURIWithVersion.get()).forward(request, response);
         } else {
+            log.debug("Chaining");
             chain.doFilter(request, response);
         }
     }
