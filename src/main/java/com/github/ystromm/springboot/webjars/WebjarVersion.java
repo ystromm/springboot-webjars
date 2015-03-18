@@ -1,4 +1,4 @@
-package se.ystromm.springboot.webjars;
+package com.github.ystromm.springboot.webjars;
 
 import java.io.IOException;
 import java.io.InputStream;

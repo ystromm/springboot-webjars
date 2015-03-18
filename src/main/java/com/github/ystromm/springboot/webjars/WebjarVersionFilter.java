@@ -1,6 +1,6 @@
-package se.ystromm.springboot.webjars;
+package com.github.ystromm.springboot.webjars;
 
-import static se.ystromm.springboot.webjars.WebjarVersion.webjarVersion;
+import static com.github.ystromm.springboot.webjars.WebjarVersion.webjarVersion;
 
 import java.io.IOException;
 import java.util.regex.Matcher;

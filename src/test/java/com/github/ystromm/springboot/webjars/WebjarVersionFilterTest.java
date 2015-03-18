@@ -1,4 +1,4 @@
-package se.ystromm.springboot.webjars;
+package com.github.ystromm.springboot.webjars;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.github.ystromm.springboot.webjars.WebjarVersionFilter;
 
 @RunWith(MockitoJUnitRunner.class)
 public class WebjarVersionFilterTest {

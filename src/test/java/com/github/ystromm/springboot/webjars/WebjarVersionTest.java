@@ -1,10 +1,11 @@
-package se.ystromm.springboot.webjars;
+package com.github.ystromm.springboot.webjars;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
 
+import com.github.ystromm.springboot.webjars.WebjarVersion;
 import com.google.common.base.Optional;
 
 public class WebjarVersionTest {
