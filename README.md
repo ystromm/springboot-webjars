@@ -7,13 +7,17 @@ Strips the version from webjars paths based on the version found in pom.properti
 
 For example AngularJS 1.3.14 that normally would be imported with...
 
-[source, html]
+[source,html]
+----
 <script src="webjars/angularjs/1.3.14/angular.js"></script> 
+----
 
 ...can also be imported without the version:
 
-[source, html]
+[source,html]
+----
 <script src="webjars/angularjs/angular.js"></script>
+----
 
 Configuring Springboot
 ======================
@@ -21,12 +25,14 @@ Configuring Springboot
 Make sure the filter is discovered by SpringBoot by adding it
 to the ComponentScan annotation.
 
-[source, java]
+[source,java]
+----
 @SpringBootApplication
 @ComponentScan(basePackageClasses={WebjarVersionFilter.class})
 public class FrontMain {
-...
+    ...
 }
+----
 
 Stolen with pride from...
 =========================
